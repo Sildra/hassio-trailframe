@@ -33,8 +33,16 @@ else
     PIN="trailframe"
 fi
 
+bashio::log.info "Preparing Trailframe data folder..."
+
 python -m venv "${VENV}" || bashio::exit.nok "Could not create ${VENV}"
-INSTALLED=$("${VENV}/bin/pip" show trailframe 2>/dev/null | awk '/^Version:/{print $2}')
+
+# Guarded against strict-mode (set -e/-o pipefail): 'pip show' exits
+# non-zero when the package is not installed yet.
+INSTALLED=""
+if "${VENV}/bin/pip" show trailframe > /dev/null 2>&1; then
+    INSTALLED=$("${VENV}/bin/pip" show trailframe | awk '/^Version:/{print $2}')
+fi
 WANTED=${PIN#trailframe==}
 
 if [ "${INSTALLED}" != "${WANTED}" ]; then
@@ -46,14 +54,16 @@ else
 fi
 
 export PATH="${VENV}/bin:${PATH}"
-export TZ="$(bashio::supervisor.timezone)"
+# Guarded against strict-mode: the supervisor API call can fail transiently
+TIMEZONE=$(bashio::supervisor.timezone 2>/dev/null || true)
+export TZ="${TIMEZONE:-UTC}"
 
 # Publish the listening port for the container healthcheck
 printf '%s' "${PORT}" > /var/run/trailframe.port
 
 # Trailframe generates its own config.yaml on first start and manages it
 # afterwards; all further settings are changed from its web UI.
-cd "${DATA_PATH}"
+cd "${DATA_PATH}" || bashio::exit.nok "Could not enter ${DATA_PATH}"
 bashio::log.info "Starting Trailframe on port ${PORT}..."
 exec python -m trailframe.main \
     --config "${DATA_PATH}/config.yaml" \

@@ -1,6 +1,6 @@
 {
   "name": "Trailframe",
-  "version": "0.1.0-3",
+  "version": "0.1.0-4",
   "slug": "trailframe",
   "description": "Self-hosted photo gallery linking photos with GPS activities (Garmin Connect / GPX)",
   "url": "https://github.com/sildra/hassio-trailframe/tree/main/trailframe",
