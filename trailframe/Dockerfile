@@ -24,6 +24,9 @@ RUN curl -sL -o /tmp/bashio.tar.gz https://github.com/hassio-addons/bashio/archi
 
 COPY rootfs /
 
+# Debug: prove what was copied into the image (visible in build logs)
+RUN ls -la /docker-entrypoint.sh
+
 # Ensure the entrypoint is executable even when the repository was checked
 # out on a filesystem that does not preserve permissions (e.g. Windows/NTFS)
 RUN chmod 0755 /docker-entrypoint.sh
@@ -31,4 +34,6 @@ RUN chmod 0755 /docker-entrypoint.sh
 HEALTHCHECK --interval=1m --timeout=5s --start-period=10m --start-interval=5s \
   CMD curl -f "http://localhost:$(cat /var/run/trailframe.port 2>/dev/null || echo 8000)/" > /dev/null || exit 1
 
-ENTRYPOINT [ "/usr/bin/tini", "--", "/docker-entrypoint.sh" ]
+# Invoke bashio directly so the entrypoint never relies on its own
+# execute permission bit (robust against non-executable checkouts)
+ENTRYPOINT [ "/usr/bin/tini", "--", "/usr/bin/env", "bashio", "/docker-entrypoint.sh" ]
