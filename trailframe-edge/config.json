@@ -1,0 +1,50 @@
+{
+  "name": "Trailframe Edge",
+  "version": "edge",
+  "slug": "trailframe_edge",
+  "description": "Development build of the Trailframe photo gallery app",
+  "url": "https://github.com/sildra/hassio-trailframe/tree/main/trailframe-edge",
+  "startup": "application",
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "boot": "auto",
+  "init": false,
+  "ingress": false,
+  "hassio_api": false,
+  "timeout": 30,
+  "panel_icon": "mdi:image-multiple",
+  "map": [
+    {
+      "type": "media",
+      "read_only": false
+    },
+    {
+      "type": "share",
+      "read_only": false
+    },
+    {
+      "type": "addon_config",
+      "read_only": false,
+      "path": "/addon_config"
+    }
+  ],
+  "ports": {
+    "8000/tcp": 8000
+  },
+  "ports_description": {
+    "8000/tcp": "Trailframe web UI - must match the 'port' option"
+  },
+  "options": {
+    "data_path": "/data/trailframe-edge",
+    "photos_path": "/media/photos",
+    "port": 8000
+  },
+  "schema": {
+    "data_path": "str",
+    "photos_path": "str",
+    "port": "port"
+  },
+  "image": "ghcr.io/sildra/trailframe-edge-{arch}"
+}
