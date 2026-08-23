@@ -22,6 +22,30 @@ fi
 ln -sfn "${PHOTOS_PATH}" "${DATA_PATH}/photos" \
     || bashio::exit.nok "Could not link ${PHOTOS_PATH} into ${DATA_PATH}"
 
+# Persistent virtualenv: Trailframe and its dependencies are installed from
+# PyPI on first start and survive add-on updates (only the pinned version
+# changes). The pin follows the add-on version: X.Y.Z-A -> trailframe==X.Y.Z.
+VENV="${DATA_PATH}/venv"
+ADDON_VERSION=$(bashio::addon.version 2>/dev/null || true)
+if [ -n "${ADDON_VERSION}" ]; then
+    PIN="trailframe==${ADDON_VERSION%%-*}"
+else
+    PIN="trailframe"
+fi
+
+python -m venv "${VENV}" || bashio::exit.nok "Could not create ${VENV}"
+INSTALLED=$("${VENV}/bin/pip" show trailframe 2>/dev/null | awk '/^Version:/{print $2}')
+WANTED=${PIN#trailframe==}
+
+if [ "${INSTALLED}" != "${WANTED}" ]; then
+    bashio::log.info "Installing ${PIN} into ${VENV} (this can take a while on first start)..."
+    "${VENV}/bin/pip" install --no-cache-dir --upgrade "${PIN}" \
+        || bashio::exit.nok "Failed to install ${PIN}"
+else
+    bashio::log.info "Trailframe ${INSTALLED} already installed"
+fi
+
+export PATH="${VENV}/bin:${PATH}"
 export TZ="$(bashio::supervisor.timezone)"
 
 # Publish the listening port for the container healthcheck

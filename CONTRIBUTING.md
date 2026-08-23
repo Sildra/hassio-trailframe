@@ -6,36 +6,21 @@ Contributions are welcome! Feel free to open issues and pull requests.
 
 ```
 hassio-trailframe/
-├── common/               Shared build files (Dockerfile, build.yaml, entrypoint)
-├── trailframe/           Stable add-on (tracks Trailframe releases)
-├── trailframe-edge/      Edge add-on (tracks the Trailframe main branch)
-└── .github/workflows/    CI: build & publish images
+└── trailframe/       The app (config.json, Dockerfile, rootfs/)
 ```
 
-`Dockerfile`, `build.yaml` and `rootfs/` are shared between both add-ons via
-`common/`. They are copied into each add-on folder by CI before building — do
-not commit them inside `trailframe/` or `trailframe-edge/`.
+There is no CI and no published image: Home Assistant builds the image
+locally on the user's device when the app is installed, and Trailframe is
+installed from PyPI into a persistent virtualenv at first start. Bumping the
+packaged Trailframe version only requires changing `version` in
+`trailframe/config.json`.
 
 ## Testing changes locally
 
-Build the edge add-on image locally with the HA builder:
-
-```bash
-cd ..
-cp common/Dockerfile hassio-trailframe/trailframe-edge/
-cp -R common/rootfs hassio-trailframe/trailframe-edge/
-cp common/build.yaml hassio-trailframe/trailframe-edge/
-docker run --rm --privileged \
-  -v $(pwd)/hassio-trailframe/trailframe-edge:/data homeassistant/amd64-builder \
-  --amd64 -t /data --no-cache
-rm -rf hassio-trailframe/trailframe-edge/rootfs
-rm hassio-trailframe/trailframe-edge/Dockerfile
-rm hassio-trailframe/trailframe-edge/build.yaml
-```
-
-Or simply run `common/local_build.sh`.
-
-Then install the repository as a local repository in Home Assistant
-(**Settings → Add-ons → Add-on Store → ⋮ → Repositories**) or copy the add-on
-folder into `/usr/share/hassio/addons/local`, disable *Watchdog* in the add-on
-settings while testing, and check the logs.
+1. Copy (or clone) this repository onto a machine running Home Assistant OS /
+   Supervised, e.g. into `/usr/share/hassio/addons/local/trailframe`, or add
+   it as a **local repository** in the App Store
+   (**Settings → Apps → App Store → ⋮ → Repositories**).
+2. Install/start the app from there; check the **Log** tab for output.
+3. Tip: turn off *Watchdog* in the app settings while testing so the
+   container isn't restarted automatically when stopped via the CLI.

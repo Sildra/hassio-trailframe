@@ -2,33 +2,40 @@
 [![GitHub Activity](https://img.shields.io/github/commit-activity/y/sildra/hassio-trailframe.svg?style=for-the-badge)](https://github.com/sildra/hassio-trailframe/commits/main)
 [![License](https://img.shields.io/github/license/sildra/hassio-trailframe.svg?style=for-the-badge)](LICENSE)
 
-# Trailframe Home Assistant add-on
+# Trailframe Home Assistant app
 
-Home Assistant add-ons for [Trailframe](https://github.com/sildra/trailframe), a
+Home Assistant app for [Trailframe](https://github.com/sildra/trailframe), a
 self-hosted photo gallery for people who move: photos and GPS activities
 (Garmin Connect / GPX) live side by side, linked by time and place.
 
-The repository contains two add-ons:
-
-| Add-on | Description | Recommended |
-| --- | --- | --- |
-| [Trailframe](trailframe/) | Stable release tracking released versions of Trailframe | ✔️ For most users |
-| [Trailframe Edge](trailframe-edge/) | Development build tracking the `main` branch of Trailframe | For testing |
+The app has no published images and no CI: Home Assistant builds it locally
+on your device at install time, and Trailframe itself (with all its Python
+dependencies) is installed from PyPI into a virtualenv stored in the app's
+persistent data folder on first start.
 
 ## Installation
 
-1. In Home Assistant go to **Settings → Add-ons → Add-on Store**, click **⋮ →
+1. In Home Assistant go to **Settings → Apps → App Store**, click **⋮ →
    Repositories**, fill in `https://github.com/sildra/hassio-trailframe` and
    click **Add → Close**.
-2. Click on the add-on and press **Install**. Note that the first build/install
-   can take a long time (the image includes PyTorch/ultralytics used by the
-   object-detection scanner).
-3. Configure the add-on (at minimum the `photos_path` option) and start it.
+2. Click on the **Trailframe** app and press **Install**. The image build
+   is quick; the bulk of the work happens at first start.
+3. Configure the app (at minimum the `photos_path` option) and start it.
+   The first start takes several minutes: the dependencies include PyTorch
+   and are installed into `/data/trailframe/venv` (an internet connection is
+   required).
 4. The web UI is available on port `8000` (default) of your Home Assistant
    host: `http://homeassistant.local:8000` — the port is configurable via the
-   add-on's `port` option and *Network* settings.
+   app's `port` option and *Network* settings.
 
 For more information see the [documentation](trailframe/DOCS.md).
+
+## Updating Trailframe
+
+The `version` of the app (`X.Y.Z-A`) pins the packaged Trailframe version:
+the part before the dash is what gets installed from PyPI. To ship a new
+Trailframe release, bump `version` in [`trailframe/config.json`](trailframe/config.json)
+and commit — users get the update through the regular app updater.
 
 ## Credits
 

@@ -45,6 +45,5 @@
     "data_path": "str",
     "photos_path": "str",
     "port": "port"
-  },
-  "image": "ghcr.io/sildra/trailframe-{arch}"
+  }
 }

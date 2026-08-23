@@ -1,28 +1,31 @@
-# Home Assistant add-on: Trailframe
+# Home Assistant app: Trailframe
 
-[![Open your Home Assistant instance and show the add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fsildra%2Fhassio-trailframe)
+[![Open your Home Assistant instance and show the app repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fsildra%2Fhassio-trailframe)
 
 Trailframe is a self-hosted photo gallery for people who move: photos and GPS
 activities (Garmin Connect / GPX) live side by side, linked by time and place.
 
-This add-on installs the stable release of Trailframe. See the upstream
+This app installs the stable release of Trailframe. See the upstream
 project for the full feature list:
 
 https://github.com/sildra/trailframe
 
 ## Installation
 
-Follow these steps to get the add-on installed on your system:
+Follow these steps to get the app installed on your system:
 
-1. In Home Assistant go to **Settings → Add-ons → Add-on Store**, click **⋮ →
+1. In Home Assistant go to **Settings → Apps → App Store**, click **⋮ →
    Repositories**, fill in `https://github.com/sildra/hassio-trailframe` and
    click **Add → Close**.
-2. Click on the **Trailframe** add-on and press **Install**.
-   The image is large (it includes PyTorch/ultralytics used by the object
-   detection scanner), so the first installation can take a while.
-3. Configure the add-on (see *Configuration* below) — at minimum make sure the
+2. Click on the **Trailframe** app and press **Install**. Home Assistant
+   builds the small container image locally on your device.
+3. Configure the app (see *Configuration* below) — at minimum make sure the
    `photos_path` points to a folder containing your photos.
-4. Start the add-on.
+4. Start the app. On **first start** Trailframe and its Python
+   dependencies (including PyTorch, ~2 GB) are installed from PyPI into the
+   persistent `/data/trailframe/venv` — this takes several minutes and needs
+   an internet connection. Later starts are fast, and app updates reuse
+   the virtualenv unless the pinned version changed.
 5. Open `http://homeassistant.local:8000` (or the IP of your Home Assistant
    instance) to use Trailframe. Check the **Log** tab if something went wrong.
 
@@ -33,21 +36,21 @@ Follow these steps to get the add-on installed on your system:
 
 ## Configuration
 
-**Note**: *Remember to restart the add-on when the configuration is changed.*
+**Note**: *Remember to restart the app when the configuration is changed.*
 
-The add-on configuration is intentionally minimal — only the two options that
+The app configuration is intentionally minimal — only the two options that
 map to Trailframe's command-line arguments. Everything else is configured from
 the Trailframe web UI after the first start.
 
 | Option | Default | Description |
 | --- | --- | --- |
 | `data_path` | `/data/trailframe` | Base folder holding the library (database, thumbnails, maps, models, tiles, trash) and the app-managed `config.yaml`. |
-| `photos_path` | `/media/photos` | Location of your photo library; exposed inside the add-on as `<data_path>/photos`. |
+| `photos_path` | `/media/photos` | Location of your photo library; exposed inside the app as `<data_path>/photos`. |
 | `port` | `8000` | Port the Trailframe web UI listens on. |
 
 Notes:
 
-- If you change `port`, also open the add-on's *Network* settings and update
+- If you change `port`, also open the app's *Network* settings and update
   the port mapping so it matches (the default mapping exposes `8000`).
 - The SQLite database lives at `<data_path>/gallery.db`.
 - On first start Trailframe writes its own `<data_path>/config.yaml` with
@@ -79,7 +82,7 @@ Notes:
 ## Support
 
 - Upstream project & documentation: https://github.com/sildra/trailframe
-- Issues with this add-on: https://github.com/sildra/hassio-trailframe/issues
+- Issues with this app: https://github.com/sildra/hassio-trailframe/issues
 
 ## Changelog
 
