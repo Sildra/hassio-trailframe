@@ -1,3 +1,6 @@
+## v0.1.1
+- Updated Trailframe to version [`v0.1.1`](https://github.com/Sildra/trailframe/releases/tag/v0.1.1)
+
 # Changelog
 
 All notable changes to this app will be documented in this file.
