@@ -24,9 +24,6 @@ persistent data folder on first start.
    The first start takes several minutes: the dependencies include PyTorch
    and are installed into `/data/trailframe/venv` (an internet connection is
    required).
-4. The web UI is available on port `8000` (default) of your Home Assistant
-   host: `http://homeassistant.local:8000` — the port is configurable via the
-   app's `port` option and *Network* settings.
 
 For more information see the [documentation](trailframe/DOCS.md).
 

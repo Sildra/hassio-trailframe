@@ -26,8 +26,6 @@ Follow these steps to get the app installed on your system:
    persistent `/data/trailframe/venv` — this takes several minutes and needs
    an internet connection. Later starts are fast, and app updates reuse
    the virtualenv unless the pinned version changed.
-5. Open `http://homeassistant.local:8000` (or the IP of your Home Assistant
-   instance) to use Trailframe. Check the **Log** tab if something went wrong.
 
 > The web UI is not exposed through the Home Supervisor ingress sidebar but on
 > its own port, since the frontend currently requires being served from the
@@ -46,12 +44,9 @@ the Trailframe web UI after the first start.
 | --- | --- | --- |
 | `data_path` | `/data/trailframe` | Base folder holding the library (database, thumbnails, maps, models, tiles, trash) and the app-managed `config.yaml`. |
 | `photos_path` | `/media/photos` | Location of your photo library; exposed inside the app as `<data_path>/photos`. |
-| `port` | `8000` | Port the Trailframe web UI listens on. |
 
 Notes:
 
-- If you change `port`, also open the app's *Network* settings and update
-  the port mapping so it matches (the default mapping exposes `8000`).
 - The SQLite database lives at `<data_path>/gallery.db`.
 - On first start Trailframe writes its own `<data_path>/config.yaml` with
   default settings; afterwards settings changed from the web UI

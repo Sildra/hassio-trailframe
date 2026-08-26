@@ -1,3 +1,6 @@
+## v0.1.1-3
+- Fix port to 8099 for ingress
+
 ## v0.1.1-1
 - Enable ingress
 

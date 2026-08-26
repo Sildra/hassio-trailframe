@@ -1,6 +1,6 @@
 {
   "name": "Trailframe",
-  "version": "v0.1.1-1",
+  "version": "v0.1.1-3",
   "slug": "trailframe",
   "description": "Self-hosted photo gallery linking photos with GPS activities (Garmin Connect / GPX)",
   "url": "https://github.com/sildra/hassio-trailframe/tree/main/trailframe",
@@ -30,20 +30,12 @@
       "path": "/addon_config"
     }
   ],
-  "ports": {
-    "8000/tcp": 8000
-  },
-  "ports_description": {
-    "8000/tcp": "Trailframe web UI - must match the 'port' option"
-  },
   "options": {
     "data_path": "/data/trailframe",
-    "photos_path": "/media/photos",
-    "port": 8000
+    "photos_path": "/media/photos"
   },
   "schema": {
     "data_path": "str",
-    "photos_path": "str",
-    "port": "port"
+    "photos_path": "str"
   }
 }

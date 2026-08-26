@@ -8,10 +8,6 @@ PORT=$(bashio::config 'port')
 # Workaround for supervisor race conditions on boot
 bashio::config.require 'data_path'
 
-if ! bashio::var.has_value "${PORT}"; then
-    PORT=8000
-fi
-
 mkdir -p "${DATA_PATH}" || bashio::exit.nok "Could not create ${DATA_PATH}"
 
 # Expose the configured photos folder as <data_path>/photos
@@ -58,9 +54,6 @@ export PATH="${VENV}/bin:${PATH}"
 TIMEZONE=$(bashio::supervisor.timezone 2>/dev/null || true)
 export TZ="${TIMEZONE:-UTC}"
 
-# Publish the listening port for the container healthcheck
-printf '%s' "${PORT}" > /var/run/trailframe.port
-
 # Trailframe generates its own config.yaml on first start and manages it
 # afterwards; all further settings are changed from its web UI.
 cd "${DATA_PATH}" || bashio::exit.nok "Could not enter ${DATA_PATH}"
@@ -68,5 +61,5 @@ bashio::log.info "Starting Trailframe on port ${PORT}..."
 exec python -m trailframe.main \
     --config "${DATA_PATH}/config.yaml" \
     --folder "${DATA_PATH}" \
-    --port "${PORT}" \
+    --port "8099" \
     --database "${DATA_PATH}/gallery.db"

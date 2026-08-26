@@ -29,6 +29,6 @@ COPY rootfs /
 RUN chmod 0755 /docker-entrypoint.sh
 
 HEALTHCHECK --interval=1m --timeout=5s --start-period=10m --start-interval=5s \
-  CMD curl -f "http://localhost:$(cat /var/run/trailframe.port 2>/dev/null || echo 8000)/" > /dev/null || exit 1
+  CMD curl -f "http://localhost:8099" > /dev/null || exit 1
 
 ENTRYPOINT [ "/usr/bin/tini", "--", "/usr/bin/env", "bashio", "/docker-entrypoint.sh" ]
