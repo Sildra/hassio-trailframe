@@ -1,5 +1,9 @@
+## v0.3.1-1
+- Log a status-based line when the Trailframe backend exits
+
 ## v0.3.1
 - Updated Trailframe to version [`v0.3.1`](https://github.com/Sildra/trailframe/releases/tag/v0.3.1)
+- Document embedding the slideshow in a Home Assistant card (README)
 
 ## v0.3.0
 - Updated Trailframe to version [`v0.3.0`](https://github.com/Sildra/trailframe/releases/tag/v0.3.0)

@@ -63,9 +63,19 @@ if bashio::config.true 'failsafe'; then
     bashio::log.warning "Failsafe mode enabled: starting without the FolderService (no scan/watch)"
     FAILSAFE_ARGS+=(--failsafe)
 fi
-exec python -m trailframe.main \
+
+STATUS=0
+python -m trailframe.main \
     --config "${DATA_PATH}/config.yaml" \
     --folder "${DATA_PATH}" \
     --port "8099" \
     --database "${DATA_PATH}/gallery.db" \
-    "${FAILSAFE_ARGS[@]}"
+    "${FAILSAFE_ARGS[@]}" || STATUS=$?
+
+if [ "${STATUS}" -eq 0 ]; then
+    bashio::log.info "Trailframe backend exited cleanly"
+else
+    bashio::log.error "Trailframe backend exited with status ${STATUS}"
+fi
+
+exit "${STATUS}"
