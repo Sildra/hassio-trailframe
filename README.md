@@ -1,5 +1,5 @@
-[![GitHub Release](https://img.shields.io/github/release/sildra/hassio-trailframe.svg?style=for-the-badge)](https://github.com/sildra/hassio-trailframe/releases)
-[![GitHub Activity](https://img.shields.io/github/commit-activity/y/sildra/hassio-trailframe.svg?style=for-the-badge)](https://github.com/sildra/hassio-trailframe/commits/main)
+[![Trailframe Release](https://img.shields.io/github/release/sildra/trailframe.svg?style=for-the-badge)](https://github.com/sildra/trailframe/releases)
+[![GitHub-Activity](https://img.shields.io/github/commit-activity/y/sildra/hassio-trailframe.svg?style=for-the-badge)](https://github.com/sildra/hassio-trailframe/commits/main)
 [![License](https://img.shields.io/github/license/sildra/hassio-trailframe.svg?style=for-the-badge)](LICENSE)
 
 # Trailframe Home Assistant app
@@ -36,6 +36,8 @@ and commit — users get the update through the regular app updater.
 
 ## Trailframe in a card
 
+[![IFrame card Release](https://img.shields.io/github/release/lovelylain/ha-addon-iframe-card.svg?style=for-the-badge)](https://github.com/lovelylain/ha-addon-iframe-card)
+
 Once the app is installed and running, you can embed the (standalone kiosk) slideshow
 in a dashboard card with
 [addon-iframe-card](https://github.com/lovelylain/ha-addon-iframe-card).
@@ -46,11 +48,11 @@ Install that card from HACS:
    `https://github.com/lovelylain/ha-addon-iframe-card` with category **Lovelace**.
 2. Then install **addon-iframe-card** from HACS and reload your dashboard.
 
-Example card config (slideshow menu, groups section):
+Example card config (slideshow menu, custom section):
 
 ```yaml
 type: custom:addon-iframe-card
-url: f6a361ef_trailframe/slideshow.html?section=groups
+url: f6a361ef_trailframe/slideshow.html?section=custom
 aspect_ratio: 100%
 grid_options:
   columns: full
