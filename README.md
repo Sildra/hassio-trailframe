@@ -34,6 +34,35 @@ the part before the dash is what gets installed from PyPI. To ship a new
 Trailframe release, bump `version` in [`trailframe/config.json`](trailframe/config.json)
 and commit — users get the update through the regular app updater.
 
+## Trailframe in a card
+
+Once the app is installed and running, you can embed the (standalone kiosk) slideshow
+in a dashboard card with
+[addon-iframe-card](https://github.com/lovelylain/ha-addon-iframe-card).
+
+Install that card from HACS:
+
+1. In Home Assistant go to **HACS → ⋮ → Custom repositories** and add
+   `https://github.com/lovelylain/ha-addon-iframe-card` with category **Lovelace**.
+2. Then install **addon-iframe-card** from HACS and reload your dashboard.
+
+Example card config (slideshow menu, groups section):
+
+```yaml
+type: custom:addon-iframe-card
+url: f6a361ef_trailframe/slideshow.html?section=groups
+aspect_ratio: 100%
+grid_options:
+  columns: full
+  rows: 8
+```
+
+The `f6a361ef_trailframe` part is the slug of the installed app (uppercase `_`
+in the slug) plus the app name; adjust it to whatever the addon slug of your
+installation is. The URL can use any of the supported slideshow parameters, e.g.
+`?section=custom&start=1` for a self-starting custom slideshow, `?controls=hide`
+and `?map=hide` to hide the control bar and map, or a `?photos=...` deep link.
+
 ## Credits
 
 Repository structure modeled after
