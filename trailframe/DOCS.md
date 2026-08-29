@@ -23,7 +23,7 @@ Follow these steps to get the app installed on your system:
    `photos_path` points to a folder containing your photos.
 4. Start the app. On **first start** Trailframe and its Python
    dependencies (including PyTorch, ~2 GB) are installed from PyPI into the
-   persistent `/data/trailframe/venv` — this takes several minutes and needs
+   persistent `<data_path>/venv` — this takes several minutes and needs
    an internet connection. Later starts are fast, and app updates reuse
    the virtualenv unless the pinned version changed.
 
@@ -42,11 +42,20 @@ the Trailframe web UI after the first start.
 
 | Option | Default | Description |
 | --- | --- | --- |
-| `data_path` | `/data/trailframe` | Base folder holding the library (database, thumbnails, maps, models, tiles, trash) and the app-managed `config.yaml`. |
+| `data_path` | `/share/trailframe` | Base folder holding the library (database, thumbnails, maps, models, tiles, trash) and the app-managed `config.yaml`. Stored under the Home Assistant `share` folder so it is browsable from Samba/SMB, the File Editor, etc. |
 | `photos_path` | `/media/photos` | Location of your photo library; exposed inside the app as `<data_path>/photos`. |
+| `failsafe` | `false` | Start Trailframe in failsafe mode: the FolderService (scan/watch) is not started. Use this to work on the gallery database, models or configuration without triggering scans, or when a scanner is crashing the app. |
 
 Notes:
 
+- **Where the data lives**: `data_path` defaults to `/share/trailframe`, i.e. the
+  Home Assistant `share` folder, which is accessible from outside the app via
+  Samba/SMB or the File Editor. You can point it at any mapped folder — e.g.
+  `/media/trailframe` to store it on the media share or on a NAS/network
+  drive, or `/addon_config/trailframe` for the app configuration folder.
+  When changing `data_path`, copy any existing library (`config.yaml`,
+  `gallery.db`, thumbnails, …) from the old location into the new one before
+  restarting.
 - The SQLite database lives at `<data_path>/gallery.db`.
 - On first start Trailframe writes its own `<data_path>/config.yaml` with
   default settings; afterwards settings changed from the web UI

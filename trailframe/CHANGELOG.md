@@ -1,3 +1,6 @@
+- Move `data_path` default to `/share/trailframe` so the library is accessible from outside the app (Samba/SMB, File Editor)
+- Add `failsafe` configuration option
+
 ## v0.2.0
 - Updated Trailframe to version [`v0.2.0`](https://github.com/Sildra/trailframe/releases/tag/v0.2.0)
 

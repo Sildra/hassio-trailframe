@@ -58,8 +58,14 @@ export TZ="${TIMEZONE:-UTC}"
 # afterwards; all further settings are changed from its web UI.
 cd "${DATA_PATH}" || bashio::exit.nok "Could not enter ${DATA_PATH}"
 bashio::log.info "Starting Trailframe on port ${PORT}..."
+FAILSAFE_ARGS=()
+if bashio::config.true 'failsafe'; then
+    bashio::log.warning "Failsafe mode enabled: starting without the FolderService (no scan/watch)"
+    FAILSAFE_ARGS+=(--failsafe)
+fi
 exec python -m trailframe.main \
     --config "${DATA_PATH}/config.yaml" \
     --folder "${DATA_PATH}" \
     --port "8099" \
-    --database "${DATA_PATH}/gallery.db"
+    --database "${DATA_PATH}/gallery.db" \
+    "${FAILSAFE_ARGS[@]}"
