@@ -1,3 +1,6 @@
+## v0.3.1
+- Updated Trailframe to version [`v0.3.1`](https://github.com/Sildra/trailframe/releases/tag/v0.3.1)
+
 ## v0.3.0
 - Updated Trailframe to version [`v0.3.0`](https://github.com/Sildra/trailframe/releases/tag/v0.3.0)
 
