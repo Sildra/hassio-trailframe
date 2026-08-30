@@ -1,3 +1,6 @@
+## v0.3.2
+- Updated Trailframe to version [`v0.3.2`](https://github.com/Sildra/trailframe/releases/tag/v0.3.2)
+
 ## v0.3.1-1
 - Log a status-based line when the Trailframe backend exits
 
